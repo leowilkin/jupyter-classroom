@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Error {{ status_code }} - Wellington Jupyter{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Error {{ status_code }}</h1>
+    <p>{{ detail }}</p>
+    <a href="{{ prefix }}" class="btn btn-primary">Back to Dashboard</a>
+</div>
+{% endblock %}

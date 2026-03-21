@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Wellington Jupyter{% endblock %}
+{% block content %}
+<h1>My Classrooms</h1>
+{% if classrooms %}
+<table>
+    <thead>
+        <tr>
+            <th>Classroom</th>
+            <th>Teacher</th>
+            <th>Students</th>
+            <th>Running Servers</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in classrooms %}
+        <tr>
+            <td><a href="{{ prefix }}classrooms/{{ c.name }}">{{ c.name }}</a></td>
+            <td>{{ c.teacher }}</td>
+            <td>{{ c.student_count }}</td>
+            <td>{{ c.running_servers }}</td>
+            <td class="actions">
+                <a href="{{ prefix }}classrooms/{{ c.name }}" class="btn btn-primary btn-sm">View</a>
+                <form class="inline" method="post" action="{{ prefix }}classrooms/{{ c.name }}/servers/start">
+                    <button type="submit" class="btn btn-success btn-sm">Start All</button>
+                </form>
+                <form class="inline" method="post" action="{{ prefix }}classrooms/{{ c.name }}/servers/stop">
+                    <button type="submit" class="btn btn-danger btn-sm">Stop All</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No classrooms found. {% if session.admin %}Go to <a href="{{ prefix }}admin">Admin</a> to create one.{% endif %}</p>
+{% endif %}
+{% endblock %}

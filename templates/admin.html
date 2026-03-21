@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Admin - Wellington Jupyter{% endblock %}
+{% block content %}
+<h1>Admin</h1>
+
+<div class="card">
+    <h2>Teachers</h2>
+    {% if admins %}
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in admins %}
+            <tr>
+                <td>{{ a }}</td>
+                <td>
+                    {% if a != session.username %}
+                    <form class="inline" method="post" action="{{ prefix }}admin/admins/{{ a }}/remove"
+                          onsubmit="return confirm('Remove {{ a }} as admin?')">
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                    {% else %}
+                    <span style="color: #999; font-size: 0.85rem;">You</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No teachers found.</p>
+    {% endif %}
+    <form method="post" action="{{ prefix }}admin/admins" style="margin-top: 1rem;">
+        <div class="form-group">
+            <label for="email">Add Teacher</label>
+            <input type="email" id="email" name="email" required placeholder="e.g. wilkinl@wellingtoncollege.org.uk">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Teacher</button>
+    </form>
+</div>
+
+<div class="card" style="margin-top: 1.5rem;">
+    <h2>Create Classroom</h2>
+    <form method="post" action="{{ prefix }}admin/classrooms">
+        <div class="form-group">
+            <label for="name">Set Code</label>
+            <input type="text" id="name" name="name" required placeholder="e.g. 12BALCS1">
+        </div>
+        <div class="form-group">
+            <label for="teacher">Teacher Email</label>
+            <input type="email" id="teacher" name="teacher" required placeholder="e.g. wilkinl@wellingtoncollege.org.uk">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Classroom</button>
+    </form>
+</div>
+
+<h2 style="margin-top: 1.5rem;">All Classrooms</h2>
+{% if classrooms %}
+<table>
+    <thead>
+        <tr>
+            <th>Classroom</th>
+            <th>Teacher</th>
+            <th>Students</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in classrooms %}
+        <tr>
+            <td>{{ c.name }}</td>
+            <td>{{ c.teacher }}</td>
+            <td>{{ c.student_count }}</td>
+            <td>
+                <a href="{{ prefix }}classrooms/{{ c.name }}" class="btn btn-primary btn-sm">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No classrooms yet.</p>
+{% endif %}
+{% endblock %}

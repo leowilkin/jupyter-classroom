@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ group_name }} - Wellington Jupyter{% endblock %}
+{% block content %}
+<h1>{{ group_name }}</h1>
+<p>Teacher: <strong>{{ teacher }}</strong></p>
+
+<div class="actions" style="margin-bottom: 1rem;">
+    <form class="inline" method="post" action="{{ prefix }}classrooms/{{ group_name }}/servers/start">
+        <button type="submit" class="btn btn-success">Start All Servers</button>
+    </form>
+    <form class="inline" method="post" action="{{ prefix }}classrooms/{{ group_name }}/servers/stop">
+        <button type="submit" class="btn btn-danger">Stop All Servers</button>
+    </form>
+</div>
+
+{% if students %}
+<table>
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Last Activity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in students %}
+        <tr>
+            <td>{{ s.username }}</td>
+            <td>
+                <span class="badge badge-{{ s.status }}">{{ s.status }}</span>
+            </td>
+            <td>{{ s.last_activity or "—" }}</td>
+            <td class="actions">
+                {% if s.status == "stopped" %}
+                <form class="inline" method="post" action="{{ prefix }}classrooms/{{ group_name }}/servers/start">
+                    <input type="hidden" name="username" value="{{ s.username }}">
+                    <button type="submit" class="btn btn-success btn-sm">Start</button>
+                </form>
+                {% else %}
+                <a href="/user/{{ s.username }}/" class="btn btn-primary btn-sm" target="_blank">Open</a>
+                <form class="inline" method="post" action="{{ prefix }}classrooms/{{ group_name }}/servers/stop">
+                    <input type="hidden" name="username" value="{{ s.username }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Stop</button>
+                </form>
+                {% endif %}
+                <form class="inline" method="post" action="{{ prefix }}classrooms/{{ group_name }}/students/{{ s.username }}/remove"
+                      onsubmit="return confirm('Remove {{ s.username }}?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No students in this classroom yet.</p>
+{% endif %}
+
+<div class="card" style="margin-top: 1.5rem;">
+    <h2>Add Student</h2>
+    <form method="post" action="{{ prefix }}classrooms/{{ group_name }}/students">
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input type="email" id="username" name="username" required placeholder="e.g. wilkinl@wellingtoncollege.org.uk">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Student</button>
+    </form>
+</div>
+{% endblock %}
