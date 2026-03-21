@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Wellington Jupyter{% endblock %}</title>
+    <title>{% block title %}Jupyter Classroom{% endblock %}</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; }
         body {
@@ -55,12 +55,17 @@
         h1 { font-size: 1.5rem; margin: 0 0 1rem 0; }
         h2 { font-size: 1.2rem; margin: 0 0 0.75rem 0; }
         .actions { display: flex; gap: 0.5rem; }
+        footer {
+            text-align: center; padding: 1.5rem 1rem; margin-top: 2rem;
+            font-size: 0.8rem; color: #888; border-top: 1px solid #e0e0e0;
+        }
+        footer a { color: #666; }
     </style>
 </head>
 <body>
     <nav>
         <img src="{{ prefix }}static/logo.png" alt="Wellington" style="height: 36px; vertical-align: middle;">
-        <span class="brand">Wellington Jupyter</span>
+        <span class="brand">Jupyter Classroom</span>
         <a href="{{ prefix }}">Dashboard</a>
         <a href="{{ prefix }}admin">Admin</a>
         <span class="spacer"></span>
@@ -75,5 +80,9 @@
         {% endif %}
         {% block content %}{% endblock %}
     </div>
+    <footer>
+        <p>The Jupyter&reg; and Jupyter Logo&reg; trademarks are registered with the U.S. Patent &amp; Trademark Office by <a href="https://lf-charities.org/">LF Charities</a>. &copy; 2026</p>
+        <p>&copy; 2026 <a href="https://leowilkin.com">Leo Wilkin</a> &middot; Licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
+    </footer>
 </body>
 </html>
