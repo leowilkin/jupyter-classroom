@@ -1,6 +1,7 @@
 # JupyterHub Classroom Manager
 
 [![PyPI](https://img.shields.io/pypi/v/jupyter-classroom)](https://pypi.org/project/jupyter-classroom/)
+[![Python Checks](https://github.com/leowilkin/jupyter-classroom/actions/workflows/check.yml/badge.svg)](https://github.com/leowilkin/jupyter-classroom/actions/workflows/check.yml)
 
 Classroom Manager is a FastAPI web dashboard, built as a JupyterHub service for classroom management for teachers. It provides an intuitive dashboard for non-technical staff to manage a cohort ot students on Jupyter notebooks.
 

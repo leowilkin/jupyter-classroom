@@ -1,11 +1,8 @@
-import os
-import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 
 from .hub_client import HubClient, HubAPIError
@@ -30,13 +27,11 @@ templates = Jinja2Templates(directory=str(templates_dir))
 
 static_dir = Path(__file__).parent / "static"
 
-from fastapi.responses import FileResponse
 
 @app.get(f"{prefix}/static/{{filename}}")
 async def serve_static(filename: str):
     file_path = static_dir / filename
     if not file_path.is_file():
-        from fastapi import HTTPException
         raise HTTPException(status_code=404)
     return FileResponse(file_path)
 
