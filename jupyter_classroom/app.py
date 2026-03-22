@@ -5,9 +5,9 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 
-from .hub_client import HubClient, HubAPIError
-from .auth import oauth_callback, get_service_prefix
-from .routers import classrooms, students, admin
+from .auth import get_service_prefix, oauth_callback
+from .hub_client import HubAPIError, HubClient
+from .routers import admin, classrooms, students
 
 
 @asynccontextmanager

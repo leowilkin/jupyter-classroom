@@ -4,10 +4,9 @@ import os
 import secrets
 
 import httpx
-from fastapi import Request, HTTPException
+from fastapi import HTTPException, Request
 from fastapi.responses import RedirectResponse
-from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
-
+from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
 COOKIE_NAME = "classroom-manager-session"
 MAX_AGE = 3600
