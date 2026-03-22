@@ -18,12 +18,10 @@ Authentication is managed by JupyterHub itself, so if you want to use something 
 ## Installation
 
 ```bash
-pip install -r requirements.txt
+pip install jupyter-classroom
 ```
 
-``` bash
-jupyterhub -f jupyterhub_config.py
-```
+For a full quick-start guide, see the [documentation](https://jupyter.leowilkin.com).
 
 ## JupyterHub Configuration
 
@@ -34,7 +32,7 @@ c.JupyterHub.services = [
     {
         "name": "classroom-manager",
         "url": "http://127.0.0.1:10101",
-        "command": ["python", "/path/to/classroom-manager/app.py"],
+        "command": ["jupyter-classroom"],
         "oauth_client_allowed_scopes": ["identify"],
     },
 ]

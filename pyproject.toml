@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "Classroom management dashboard for JupyterHub"
 readme = "README.md"
 requires-python = ">=3.10"
-license = "BSD-3-Clause"
+license = "MIT"
 dependencies = [
     "fastapi>=0.110",
     "uvicorn>=0.29",
@@ -20,6 +20,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/leowilkin/jupyter-classroom"
+Documentation = "https://jupyter.leowilkin.com"
 
 [project.scripts]
 jupyter-classroom = "jupyter_classroom.app:main"
