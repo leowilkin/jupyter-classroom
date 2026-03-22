@@ -8,9 +8,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from hub_client import HubClient, HubAPIError
-from auth import oauth_callback, get_service_prefix
-from routers import classrooms, students, admin
+from .hub_client import HubClient, HubAPIError
+from .auth import oauth_callback, get_service_prefix
+from .routers import classrooms, students, admin
 
 
 @asynccontextmanager
@@ -92,6 +92,10 @@ async def internal_error_handler(request: Request, exc: Exception):
     )
 
 
-if __name__ == "__main__":
+def main():
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=10101)
+    uvicorn.run(app, host="127.0.0.1", port=10101)
+
+
+if __name__ == "__main__":
+    main()

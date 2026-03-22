@@ -4,7 +4,7 @@ from urllib.parse import quote
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import RedirectResponse
 
-from auth import require_auth, get_service_prefix, get_hub_base_url
+from ..auth import require_auth, get_service_prefix, get_hub_base_url
 
 router = APIRouter()
 
@@ -64,7 +64,7 @@ async def classroom_detail(group_name: str, request: Request, session: dict = De
     group = await hub.get_group(group_name)
 
     if not _is_owner(group, session["username"], session.get("admin", False)):
-        from hub_client import HubAPIError
+        from ..hub_client import HubAPIError
         raise HubAPIError(403, "You do not have access to this classroom")
 
     usernames = [u["name"] if isinstance(u, dict) else u for u in group.get("users", [])]
@@ -101,7 +101,7 @@ async def start_servers(group_name: str, request: Request, session: dict = Depen
     group = await hub.get_group(group_name)
 
     if not _is_owner(group, session["username"], session.get("admin", False)):
-        from hub_client import HubAPIError
+        from ..hub_client import HubAPIError
         raise HubAPIError(403, "You do not have access to this classroom")
 
     if username:
@@ -136,7 +136,7 @@ async def stop_servers(group_name: str, request: Request, session: dict = Depend
     group = await hub.get_group(group_name)
 
     if not _is_owner(group, session["username"], session.get("admin", False)):
-        from hub_client import HubAPIError
+        from ..hub_client import HubAPIError
         raise HubAPIError(403, "You do not have access to this classroom")
 
     if username:

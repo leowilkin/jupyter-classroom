@@ -3,7 +3,7 @@ from urllib.parse import quote
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import RedirectResponse
 
-from auth import require_auth, get_service_prefix
+from ..auth import require_auth, get_service_prefix
 
 router = APIRouter()
 
@@ -17,7 +17,7 @@ async def add_student(
 ):
     hub = request.app.state.hub_client
     prefix = get_service_prefix()
-    from hub_client import HubAPIError
+    from ..hub_client import HubAPIError
     try:
         await hub.get_user(username)
     except HubAPIError:

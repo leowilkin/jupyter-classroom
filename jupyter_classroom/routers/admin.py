@@ -5,8 +5,8 @@ from urllib.parse import quote
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import RedirectResponse
 
-from auth import require_auth, get_service_prefix, get_hub_base_url
-from hub_client import HubAPIError
+from ..auth import require_auth, get_service_prefix, get_hub_base_url
+from ..hub_client import HubAPIError
 
 router = APIRouter()
 
