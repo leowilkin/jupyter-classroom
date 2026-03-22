@@ -7,6 +7,8 @@ Classroom Manager is a FastAPI web dashboard, built as a JupyterHub service for 
 
 Classroom Manager allows staff to add students, manage their server statuses, and assign students to classrooms.
 
+![Classroom Manager Dashboard](https://jupyter.leowilkin.com/src/assets/classroom-edit.png)
+
 ## Deployability
 
 This doesn't need a database, so there's no extra infrastructure overhead - JupyterHub manages the deployment.
