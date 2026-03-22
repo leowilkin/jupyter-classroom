@@ -15,6 +15,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Set version from release tag
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          sed -i "s/__version__ = \".*\"/__version__ = \"$VERSION\"/" jupyter_classroom/__init__.py
       - run: pip install build
       - run: python -m build
       - uses: pypa/gh-action-pypi-publish@release/v1
