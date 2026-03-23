@@ -63,11 +63,6 @@ c.JupyterHub.load_roles = [
         ],
     },
 ]
-
-# Pre-create the teachers group
-c.JupyterHub.load_groups = {
-    "teachers": [],
-}
 ```
 
 ## nbgitpuller
