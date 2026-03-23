@@ -83,6 +83,12 @@
     <footer>
         <p>The Jupyter&reg; and Jupyter Logo&reg; trademarks are registered with the U.S. Patent &amp; Trademark Office by <a href="https://lf-charities.org/">LF Charities</a>. &copy; 2026</p>
         <p>&copy; 2026 <a href="https://leowilkin.com">Leo Wilkin</a> &middot; Licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
+        <p>
+            v{{ version }}
+            {% if latest_version and latest_version != version %}
+            &middot; <a href="https://github.com/leowilkin/jupyter-classroom/releases/tag/v{{ latest_version }}" style="color: #e67e22; font-weight: 600;">Update available: v{{ latest_version }}</a>
+            {% endif %}
+        </p>
     </footer>
 </body>
 </html>

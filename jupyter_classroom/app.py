@@ -1,19 +1,40 @@
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 
+from . import __version__
 from .auth import get_service_prefix, oauth_callback
 from .hub_client import HubAPIError, HubClient
 from .routers import admin, classrooms, students
+
+logger = logging.getLogger(__name__)
+
+
+async def _fetch_latest_version() -> str | None:
+    """Fetch the latest release tag from GitHub."""
+    url = "https://api.github.com/repos/leowilkin/jupyter-classroom/releases/latest"
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(url, timeout=5)
+            resp.raise_for_status()
+            tag = resp.json().get("tag_name", "")
+            return tag.lstrip("v") if tag else None
+    except Exception:
+        logger.debug("Failed to check for updates", exc_info=True)
+        return None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     app.state.hub_client = HubClient()
     app.state.oauth_states = {}
+    latest = await _fetch_latest_version()
+    templates.env.globals["latest_version"] = latest
     yield
     await app.state.hub_client.close()
 
@@ -24,6 +45,8 @@ app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
 
 templates_dir = Path(__file__).parent / "templates"
 templates = Jinja2Templates(directory=str(templates_dir))
+templates.env.cache = None  # Avoid unhashable cache key bug in some Jinja2 versions
+templates.env.globals["version"] = __version__
 
 static_dir = Path(__file__).parent / "static"
 
