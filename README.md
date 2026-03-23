@@ -19,6 +19,7 @@ Authentication is managed by JupyterHub itself, so if you want to use something 
 
 - JupyterHub 5.x+
 - Python 3.10+
+- `jupyter-collaboration` (for real-time collaboration features)
 
 ## Installation
 
@@ -49,6 +50,7 @@ c.JupyterHub.load_roles = [
         "scopes": [
             "list:users",
             "read:users",
+            "admin:users",
             "admin:servers",
             "admin:groups",
             "read:groups",
@@ -69,6 +71,32 @@ c.JupyterHub.load_groups = {
     "teachers": [],
 }
 ```
+
+## Real-Time Collaboration
+
+Teachers can join any student's notebook session in real-time for live collaboration. This requires `jupyter-collaboration` installed in the singleuser environment:
+
+```bash
+sudo /opt/tljh/user/bin/pip install jupyter-collaboration
+```
+
+Then add this to your `jupyterhub_config.py` to enable collaborative mode on all servers:
+
+```python
+c.Spawner.args = ["--LabApp.collaborative=True"]
+```
+
+Alternatively, to enable it selectively (e.g. only for specific groups), use a `pre_spawn_hook`:
+
+```python
+def pre_spawn_hook(spawner):
+    # Enable RTC for all users
+    spawner.args.append("--LabApp.collaborative=True")
+
+c.Spawner.pre_spawn_hook = pre_spawn_hook
+```
+
+With RTC enabled, teachers can click "Join" on any running student server in the Classroom Manager dashboard to open the student's JupyterLab and collaborate in real-time.
 
 ## nbgitpuller
 
