@@ -38,7 +38,7 @@
                     <button type="submit" class="btn btn-success btn-sm">Start</button>
                 </form>
                 {% else %}
-                <a href="/user/{{ s.username }}/" class="btn btn-primary btn-sm" target="_blank">Open</a>
+                <a href="{{ hub_base_url }}user/{{ s.username }}/lab" class="btn btn-primary btn-sm" target="_blank">Join</a>
                 <form class="inline" method="post" action="{{ prefix }}classrooms/{{ group_name }}/servers/stop">
                     <input type="hidden" name="username" value="{{ s.username }}">
                     <button type="submit" class="btn btn-danger btn-sm">Stop</button>
