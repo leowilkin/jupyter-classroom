@@ -47,8 +47,7 @@ async def dashboard(request: Request, session: dict = Depends(require_auth)):
             "teacher": g.get("properties", {}).get("teacher", ""),
         })
 
-    return request.app.state.templates.TemplateResponse("dashboard.html", {
-        "request": request,
+    return request.app.state.templates.TemplateResponse(request, "dashboard.html", {
         "classrooms": classrooms,
         "session": session,
         "prefix": prefix,
@@ -82,8 +81,7 @@ async def classroom_detail(group_name: str, request: Request, session: dict = De
                 "last_activity": default_server.get("last_activity", u.get("last_activity", "")),
             })
 
-    return request.app.state.templates.TemplateResponse("classroom.html", {
-        "request": request,
+    return request.app.state.templates.TemplateResponse(request, "classroom.html", {
         "group_name": group_name,
         "students": students,
         "teacher": group.get("properties", {}).get("teacher", ""),
