@@ -45,7 +45,6 @@ app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
 
 templates_dir = Path(__file__).parent / "templates"
 templates = Jinja2Templates(directory=str(templates_dir))
-templates.env.cache = None  # Avoid unhashable cache key bug in some Jinja2 versions
 templates.env.globals["version"] = __version__
 
 static_dir = Path(__file__).parent / "static"
@@ -82,9 +81,9 @@ async def _oauth_callback(request: Request):
 async def hub_api_error_handler(request: Request, exc: HubAPIError):
     svc_prefix = get_service_prefix()
     return templates.TemplateResponse(
+        request,
         "error.html",
         {
-            "request": request,
             "status_code": exc.status_code,
             "detail": exc.detail,
             "prefix": svc_prefix,
@@ -98,9 +97,9 @@ async def hub_api_error_handler(request: Request, exc: HubAPIError):
 async def internal_error_handler(request: Request, exc: Exception):
     svc_prefix = get_service_prefix()
     return templates.TemplateResponse(
+        request,
         "error.html",
         {
-            "request": request,
             "status_code": 500,
             "detail": "An internal error occurred.",
             "prefix": svc_prefix,

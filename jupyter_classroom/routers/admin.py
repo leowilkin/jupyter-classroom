@@ -32,8 +32,7 @@ async def admin_page(request: Request, session: dict = Depends(require_auth)):
     users = await hub.list_users()
     admins = [u["name"] for u in users if u.get("admin")]
 
-    return request.app.state.templates.TemplateResponse("admin.html", {
-        "request": request,
+    return request.app.state.templates.TemplateResponse(request, "admin.html", {
         "classrooms": classrooms,
         "admins": admins,
         "session": session,
