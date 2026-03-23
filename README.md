@@ -23,7 +23,7 @@ Authentication is managed by JupyterHub itself, so if you want to use something 
 ## Installation
 
 ```bash
-sudo /opt/tljh/user/bin/pip install jupyter-classroom
+sudo /opt/tljh/hub/bin/pip install jupyter-classroom
 ```
 
 For a full quick-start guide, see the [documentation](https://jupyter.leowilkin.com).
