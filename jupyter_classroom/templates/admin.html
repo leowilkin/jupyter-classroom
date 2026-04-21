@@ -52,7 +52,12 @@
         </div>
         <div class="form-group">
             <label for="teacher">Teacher Email</label>
-            <input type="email" id="teacher" name="teacher" required placeholder="e.g. wilkinl@wellingtoncollege.org.uk">
+            <select id="teacher" name="teacher" required>
+                <option value="">-- Select a teacher --</option>
+                {% for admin in admins %}
+                <option value="{{ admin }}">{{ admin }}</option>
+                {% endfor %}
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Create Classroom</button>
     </form>
